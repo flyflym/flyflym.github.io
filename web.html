@@ -1,30 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Temperature and Humidity</title>
-    <script>
-        function updateData(data) {
-            var temperature = data.temperature;
-            var humidity = data.humidity;
-            document.getElementById('temperature').innerText = "Temperature: " + temperature + " °C";
-            document.getElementById('humidity').innerText = "Humidity: " + humidity + " %";
-        }
+<script>
+    function updateData(data) {
+        var temperature = data.temperature;
+        var humidity = data.humidity;
+        document.getElementById('temperature').innerText = "Temperature: " + temperature + " °C";
+        document.getElementById('humidity').innerText = "Humidity: " + humidity + " %";
+    }
 
-        function fetchData() {
-            fetch('http://yourwebsite.com')
-                .then(response => response.json())
-                .then(data => updateData(data));
-        }
+    function fetchData() {
+        fetch('http://192.168.133.248') // 将ESP32的IP地址替换为你提供的IP地址
+            .then(response => response.json())
+            .then(data => updateData(data))
+            .catch(error => console.error('Error fetching data:', error));
+    }
 
-        setInterval(fetchData, 60000); // 每60秒钟更新一次数据
-        fetchData(); // 初始化时立即获取数据
-    </script>
-</head>
-<body>
-    <h1>Temperature and Humidity</h1>
-    <p id="temperature">Temperature: - °C</p>
-    <p id="humidity">Humidity: - %</p>
-</body>
-</html>
+    setInterval(fetchData, 60000); // 每60秒钟更新一次数据
+    fetchData(); // 初始化时立即获取数据
+</script>
